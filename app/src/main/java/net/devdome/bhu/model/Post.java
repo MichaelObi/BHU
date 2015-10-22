@@ -2,9 +2,8 @@ package net.devdome.bhu.model;
 
 import android.database.Cursor;
 import android.provider.BaseColumns;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
-import net.devdome.bhu.Config;
 import net.devdome.bhu.db.NewsDatabase;
 
 import java.util.ArrayList;
@@ -20,22 +19,26 @@ public class Post {
         List<Post> posts = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                Log.e(Config.TAG, Integer.toString(cursor.getColumnIndex(BaseColumns._ID)));
-                Post post = new Post();
-                post.id = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID));
-                post.postId = cursor.getInt(cursor.getColumnIndex(NewsDatabase.KEY_POST_ID));
-                post.authorId = cursor.getInt(cursor.getColumnIndex(NewsDatabase.KEY_POST_AUTHOR_ID));
-                post.createdAt = cursor.getLong(cursor.getColumnIndex(NewsDatabase.KEY_CREATED_AT));
-                post.updatedAt = cursor.getLong(cursor.getColumnIndex(NewsDatabase.KEY_UPDATED_AT));
-                post.postTitle = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_TITLE));
-                post.postContent = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_CONTENT));
-                post.postContentHtml = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_CONTENT_HTML));
-                post.featuredImageLink = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_FEATURED_IMAGE));
-                post.authorName = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_AUTHOR_NAME));
-                posts.add(post);
+                posts.add(getPost(cursor));
             } while (cursor.moveToNext());
         }
         return posts;
+    }
+
+    @NonNull
+    public static Post getPost(Cursor cursor) {
+        Post post = new Post();
+        post.id = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID));
+        post.postId = cursor.getInt(cursor.getColumnIndex(NewsDatabase.KEY_POST_ID));
+        post.authorId = cursor.getInt(cursor.getColumnIndex(NewsDatabase.KEY_POST_AUTHOR_ID));
+        post.createdAt = cursor.getLong(cursor.getColumnIndex(NewsDatabase.KEY_CREATED_AT));
+        post.updatedAt = cursor.getLong(cursor.getColumnIndex(NewsDatabase.KEY_UPDATED_AT));
+        post.postTitle = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_TITLE));
+        post.postContent = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_CONTENT));
+        post.postContentHtml = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_CONTENT_HTML));
+        post.featuredImageLink = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_FEATURED_IMAGE));
+        post.authorName = cursor.getString(cursor.getColumnIndex(NewsDatabase.KEY_POST_AUTHOR_NAME));
+        return post;
     }
 
     public String getPostTitle() {

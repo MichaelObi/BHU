@@ -19,3 +19,5 @@
 -keep class retrofit.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }

@@ -3,7 +3,6 @@ package net.devdome.bhu.ui.activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -21,7 +20,7 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
     ImageView featuredImage;
     Toolbar toolbar;
     ActionBar actionBar;
-    CollapsingToolbarLayout collapsingToolbar;
+    //    CollapsingToolbarLayout collapsingToolbar;
     FloatingActionButton fabComment;
 
     @Override
@@ -33,14 +32,14 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
 //                .centerCrop()
 //                .fit()
 //                .into(featuredImage);
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("VC says he was in school by 1am. Students revolt");
+//        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             actionBar = getSupportActionBar();
             assert actionBar != null;
-            actionBar.setTitle("Story");
+            actionBar.setTitle("");
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         fabComment = (FloatingActionButton) findViewById(R.id.fab_comment);

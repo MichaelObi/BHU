@@ -15,8 +15,11 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -25,21 +28,24 @@ import net.devdome.bhu.R;
 import net.devdome.bhu.authentication.AccountConfig;
 import net.devdome.bhu.utility.NetworkUtilities;
 
+import java.io.IOException;
+
 public class LoginActivity extends AccountAuthenticatorActivity implements View.OnClickListener {
     public final static String PARAM_USER_PASS = "USER_PASS";
     public static final String KEY_ERROR_MESSAGE = "ERR_MSG";
-
     public final static String ARG_ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public final static String ARG_AUTH_TYPE = "AUTH_TYPE";
     public final static String ARG_ACCOUNT_NAME = "ACCOUNT_NAME";
     public final static String ARG_IS_ADDING_NEW_ACCOUNT = "IS_ADDING_ACCOUNT";
     AppCompatButton btnLogin;
     SharedPreferences mPreferences;
+    EditText etEmail;
+    EditText etPassword;
+    GoogleCloudMessaging gcm;
+    TextView linkSignup;
     private AccountManager mAccountManager;
     private ProgressDialog progressDialog;
     private String USERID = "user_id";
-    EditText etEmail;
-    EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +61,11 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
         etEmail = ((EditText) findViewById(R.id.et_emailAddress));
         etPassword = ((EditText) findViewById(R.id.et_password));
         btnLogin = (AppCompatButton) findViewById(R.id.btn_login);
+        linkSignup = (TextView) findViewById(R.id.link_signup);
         etPassword.setTypeface(Typeface.DEFAULT);
         etPassword.setTransformationMethod(new PasswordTransformationMethod());
         btnLogin.setOnClickListener(this);
+        linkSignup.setOnClickListener(this);
         mAccountManager = AccountManager.get(getBaseContext());
     }
 
@@ -84,11 +92,25 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
 
                 @Override
                 protected Intent doInBackground(Void... params) {
-                    Log.e(Config.TAG, "Logging In bg");
                     JsonObject loginResponse;
                     final Intent res = new Intent();
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(LoginActivity.this);
+                    }
+                    InstanceID instanceID = InstanceID.getInstance(LoginActivity.this);
+                    String token = null;
                     try {
-                        loginResponse = AccountConfig.serverAuthenticator.userSignIn(emailAddress, password);
+                        token = instanceID.getToken(Config.GCM_SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (token == null) {
+                        res.putExtra(KEY_ERROR_MESSAGE, "A server error occurred. Try again later.");
+                        return res;
+                    }
+                    Log.i(Config.TAG, "GCM token: " + token);
+                    try {
+                        loginResponse = AccountConfig.serverAuthenticator.userSignIn(emailAddress, password, token);
                         res.putExtra(AccountManager.KEY_ACCOUNT_NAME, emailAddress);
                         res.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountConfig.ACCOUNT_TYPE);
                         res.putExtra(PARAM_USER_PASS, password);
@@ -133,6 +155,9 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
                     progressDialog.cancel();
                 }
             }.execute();
+        } else if (v.getId() == linkSignup.getId()) {
+            Intent i = new Intent(this, RegisterActivity.class);
+            startActivity(i);
         }
     }
 

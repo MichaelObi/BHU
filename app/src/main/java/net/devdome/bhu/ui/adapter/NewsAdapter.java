@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import net.devdome.bhu.Config;
 import net.devdome.bhu.R;
 import net.devdome.bhu.db.NewsDatabase;
 import net.devdome.bhu.model.Post;

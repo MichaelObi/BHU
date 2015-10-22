@@ -1,5 +1,7 @@
 package net.devdome.bhu.ui.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -8,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,6 +98,13 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
                 fragment = NewsFragment.getInstance();
                 loadFragment(fragment);
                 break;
+            case R.id.nav_logout:
+                SharedPreferences prefs = this.getSharedPreferences(Config.KEY_USER_PROFILE, MODE_PRIVATE);
+                prefs.edit().clear().commit();
+                Intent i = new Intent(this, LoginActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
             default:
                 navigate(R.id.nav_news);
         }
@@ -111,7 +119,6 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        Log.e(Config.TAG, "Navigation Item Selected");
         if (menuItem.isCheckable()) {
             menuItem.setChecked(true);
         }
@@ -119,7 +126,6 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     public void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

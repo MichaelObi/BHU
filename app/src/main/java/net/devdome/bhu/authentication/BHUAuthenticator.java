@@ -67,10 +67,11 @@ public class BHUAuthenticator extends AbstractAccountAuthenticator {
         // Lets give another try to authenticate the user
         if (TextUtils.isEmpty(authToken)) {
             final String password = am.getPassword(account);
+
             if (password != null) {
                 try {
                     Log.d(Config.TAG, "re-authenticating with the existing password");
-                    AccountConfig.serverAuthenticator.userSignIn(account.name, password);
+                    AccountConfig.serverAuthenticator.userSignIn(account.name, password, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,5 +1,6 @@
 package net.devdome.bhu.authentication;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -54,11 +55,13 @@ public class HttpServerAuthenticator implements ServerAuthenticator {
     }
 
     @Override
-    public JsonObject userSignIn(String email, String password) {
+    public JsonObject userSignIn(String email, String password, @Nullable String gcmToken) {
         HashMap<String, String> loginParams = new HashMap<>(2);
         loginParams.put("email", email);
         loginParams.put("password", password);
-
+        if (gcmToken != null) {
+            loginParams.put("gcm_id", gcmToken);
+        }
         try {
             // Make Login Post Request
             URL loginUrl = new URL(Config.BASE_URL + "/auth");
@@ -102,4 +105,62 @@ public class HttpServerAuthenticator implements ServerAuthenticator {
             return null;
         }
     }
+
+    @Override
+    public JsonObject
+    userRegistration(String email, String firstName, String lastName, String matricNo, String password, String confirmPassword, String departmentCode, String level) {
+        HashMap<String, String> loginParams = new HashMap<>(2);
+        loginParams.put("email", email);
+        loginParams.put("first_name", firstName);
+        loginParams.put("last_name", lastName);
+        loginParams.put("matric_no", matricNo);
+        loginParams.put("password", password);
+        loginParams.put("password_confirmation", confirmPassword);
+        loginParams.put("level", level);
+        loginParams.put("department", departmentCode);
+        try {
+            // Make Register Post Request
+            URL loginUrl = new URL(Config.BASE_URL + "/register");
+            HttpURLConnection connection = (HttpURLConnection) loginUrl.openConnection();
+
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(8000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
+            writer.write(getPostData(loginParams));
+            writer.flush();
+            os.close();
+            Log.w(Config.TAG, connection.getResponseCode() + " " + connection.getResponseMessage());
+            JsonObject json;
+            String line;
+            String response = "";
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                while ((line = br.readLine()) != null) {
+                    response += line;
+                }
+                Log.e(Config.TAG, "response: " + response);
+                json = new JsonParser().parse(response).getAsJsonObject();
+                json.addProperty("response_code", connection.getResponseCode());
+            } else {
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                while ((line = br.readLine()) != null) {
+                    response += line;
+                }
+                json = new JsonParser().parse(response).getAsJsonObject();
+                json.addProperty("response_code", connection.getResponseCode());
+                Log.e(Config.TAG, "Error response: " + response);
+            }
+            return json;
+        } catch (IOException e) {
+            Log.e(Config.TAG, e.getMessage());
+
+            return null;
+        }
+    }
+
+
 }

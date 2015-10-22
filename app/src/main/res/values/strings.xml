@@ -10,7 +10,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="news">News</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="test_lorem">Hello world lorem ipsum is the test text. It has to be a little long in order to satisfy the criteria for the test.</string>
     <string name="featured_image">Featured Image</string>
@@ -19,4 +19,58 @@
     <string name="close">close</string>
     <string name="create_account">No account yet? Create one</string>
     <string name="title_activity_story">Story</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_register">Register</string>
+    <string name="have_accoun_login">Have an account already? Login</string>
+    <string name="Register">Register</string>
+    <string name="matriculation_no">Matriculation Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="select_department">Select Department</string>
+    <string name="select_level">Select Level</string>
+    <string name="registration_success">You have been registered successfully. Please login</string>
+
+
+    <string-array name="departments_array">
+        <item>Accounting</item>
+        <item>Anatomy</item>
+        <item>Biochemistry</item>
+        <item>Business Administration</item>
+        <item>Computer Science</item>
+        <item>Economics</item>
+        <item>English Language</item>
+        <item>Industrial Chemistry</item>
+        <item>Mass Communication</item>
+        <item>Microbiology</item>
+        <item>Medicine</item>
+        <item>Physiology</item>
+        <item>Political Science</item>
+        <item>Sociology</item>
+    </string-array>
+
+    <string-array name="department_codes_array">
+        <item>ACC</item>
+        <item>ANA</item>
+        <item>BCH</item>
+        <item>BUS</item>
+        <item>CMP</item>
+        <item>ECO</item>
+        <item>ENG</item>
+        <item>ICH</item>
+        <item>MAC</item>
+        <item>MCB</item>
+        <item>MED</item>
+        <item>PHY</item>
+        <item>POL</item>
+        <item>SOC</item>
+    </string-array>
+
+
+    <string-array name="level_array">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+    </string-array>
 </resources>

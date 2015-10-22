@@ -75,6 +75,13 @@ public class NewsDatabase extends DatabaseHelper {
         return c;
     }
 
+
+    public Cursor find(int id) {
+        db = getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM news WHERE " + "_id" + " = '" + id + "'", null);
+        c.moveToFirst();
+        return c;
+    }
     /**
      * @param values
      * @return
