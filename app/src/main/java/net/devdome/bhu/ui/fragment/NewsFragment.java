@@ -41,7 +41,7 @@ public class NewsFragment extends Fragment {
         @Override
         public void onReceive(final Context context, Intent intent) {
             Log.e(Config.TAG, "Broadcast: posts updated! ");
-            if(intent.getBooleanExtra(Config.EXTRA_POSTS_ADDED, false)) {
+            if (intent.getBooleanExtra(Config.EXTRA_POSTS_ADDED, false)) {
                 final Snackbar snackbar = Snackbar.make(view, "New articles have been added", Snackbar.LENGTH_LONG)
                         .setAction("View", new View.OnClickListener() {
                             @Override

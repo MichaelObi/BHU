@@ -1,10 +1,10 @@
 package net.devdome.bhu.authentication;
 
-import android.support.annotation.Nullable;
-import android.util.Log;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import net.devdome.bhu.Config;
 
@@ -60,7 +60,7 @@ public class HttpServerAuthenticator implements ServerAuthenticator {
         loginParams.put("email", email);
         loginParams.put("password", password);
         if (gcmToken != null) {
-            loginParams.put("gcm_id", gcmToken);
+            loginParams.put("device_token", gcmToken);
         }
         try {
             // Make Login Post Request
@@ -101,14 +101,12 @@ public class HttpServerAuthenticator implements ServerAuthenticator {
             return json;
         } catch (IOException e) {
             Log.e(Config.TAG, e.getMessage());
-
             return null;
         }
     }
 
     @Override
-    public JsonObject
-    userRegistration(String email, String firstName, String lastName, String matricNo, String password, String confirmPassword, String departmentCode, String level) {
+    public JsonObject userRegistration(String email, String firstName, String lastName, String matricNo, String password, String confirmPassword, String departmentCode, String level) {
         HashMap<String, String> loginParams = new HashMap<>(2);
         loginParams.put("email", email);
         loginParams.put("first_name", firstName);

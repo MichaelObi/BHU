@@ -40,8 +40,11 @@ public class BHUSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.i(Config.TAG, "Performing Sync Operations");
         String authToken = getAuthToken(account);
+        NewsDatabase db = new NewsDatabase(this.context);
         ApiService apiService = new RestClient().getApiService();
-        apiService.getPosts(authToken, new Callback<Post>() {
+        long timestamp = db.latestTimestamp();
+        Log.i(Config.TAG, "Latest post sync timestamp: " + timestamp);
+        apiService.getPosts(authToken, timestamp, new Callback<Post>() {
             @Override
             public void success(Post posts, Response response) {
                 List<Post.Data> data = posts.getData();

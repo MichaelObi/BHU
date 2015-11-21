@@ -1,5 +1,10 @@
 package net.devdome.bhu.ui.activity;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
@@ -17,11 +22,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import net.devdome.bhu.Config;
 import net.devdome.bhu.R;

@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class NewsDatabase extends DatabaseHelper {
-
-
     public static final String TABLE_NAME = "posts";
     public static final String KEY_POST_ID = "post_id";
     public static final String KEY_POST_TITLE = "post_title";
@@ -19,18 +17,20 @@ public class NewsDatabase extends DatabaseHelper {
     public static final String KEY_POST_AUTHOR_NAME = "author_name";
     public static final String KEY_CREATED_AT = "created_at";
     public static final String KEY_UPDATED_AT = "updated_at";
+    public static final String KEY_DIRTY = "dirty";
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + KEY_POST_ID + " INTEGER NOT NULL,"
-            + KEY_POST_TITLE + " TEXT NOT NULL,"
-            + KEY_POST_CONTENT + " TEXT NOT NULL,"
-            + KEY_POST_CONTENT_HTML + " TEXT NOT NULL,"
-            + KEY_POST_FEATURED_IMAGE + " TEXT,"
-            + KEY_POST_AUTHOR_NAME + " TEXT NOT NULL,"
-            + KEY_POST_AUTHOR_ID + " INTEGER NOT NULL,"
-            + KEY_CREATED_AT + " INTEGER NOT NULL,"
-            + KEY_UPDATED_AT + " INTEGER NOT NULL,"
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + KEY_POST_ID + " INTEGER NOT NULL, "
+            + KEY_POST_TITLE + " TEXT NOT NULL, "
+            + KEY_POST_CONTENT + " TEXT NOT NULL, "
+            + KEY_POST_CONTENT_HTML + " TEXT NOT NULL, "
+            + KEY_POST_FEATURED_IMAGE + " TEXT, "
+            + KEY_POST_AUTHOR_NAME + " TEXT NOT NULL, "
+            + KEY_POST_AUTHOR_ID + " INTEGER NOT NULL, "
+            + KEY_CREATED_AT + " INTEGER NOT NULL, "
+            + KEY_UPDATED_AT + " INTEGER NOT NULL, "
+//            + KEY_DIRTY + " INTEGER DEFAULT 0, "
             + "UNIQUE (" + KEY_POST_ID + ") ON CONFLICT REPLACE)";
     public static String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.ng.edu.binghamuni.bhu.provider.posts";
     public static String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/vnd.ng.edu.binghamuni.bhu.provider.posts";
@@ -75,13 +75,28 @@ public class NewsDatabase extends DatabaseHelper {
         return c;
     }
 
+    public long latestTimestamp() {
+        db = getReadableDatabase();
+        String[] key = new String[]{
+                KEY_UPDATED_AT
+        };
+        Cursor c = db.query(TABLE_NAME, key, null, null, null, null, KEY_UPDATED_AT + " DESC", "1");
+        if (c != null) {
+            c.moveToFirst();
+            return c.getLong(c.getColumnIndex(NewsDatabase.KEY_UPDATED_AT));
+        }
+        db.close();
+        return 0;
+    }
+
 
     public Cursor find(int id) {
         db = getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM news WHERE " + "_id" + " = '" + id + "'", null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + "_id" + " = '" + id + "'", null);
         c.moveToFirst();
         return c;
     }
+
     /**
      * @param values
      * @return

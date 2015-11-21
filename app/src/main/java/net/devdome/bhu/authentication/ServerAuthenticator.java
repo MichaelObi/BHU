@@ -1,8 +1,8 @@
 package net.devdome.bhu.authentication;
 
-import android.support.annotation.Nullable;
-
 import com.google.gson.JsonObject;
+
+import android.support.annotation.Nullable;
 
 public interface ServerAuthenticator {
 
@@ -10,7 +10,6 @@ public interface ServerAuthenticator {
      * @param email Email Address Provided
      * @param pass  Password Provided
      * @return Object with signing
-     * @throws Exception
      */
     public JsonObject userSignIn(final String email, final String pass, @Nullable String gcmToken);
 

@@ -1,11 +1,11 @@
 package net.devdome.bhu.utility;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 public class PlayServicesUtil {
 

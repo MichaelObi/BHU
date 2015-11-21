@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import net.devdome.bhu.Config;
 import net.devdome.bhu.R;
 import net.devdome.bhu.db.NewsDatabase;
 import net.devdome.bhu.model.Post;
@@ -40,15 +38,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder viewHolder, int i) {
-        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, StoryActivity.class);
-                context.startActivity(intent);
-            }
-        });
+    public void onBindViewHolder(final NewsViewHolder viewHolder, int i) {
+
+        viewHolder.setId(posts.get(i).getId());
         viewHolder.postTitle.setText(posts.get(i).getPostTitle());
         viewHolder.postExcerpt.setText(posts.get(i).getPostContent());
         viewHolder.postAuthor.setText(posts.get(i).getAuthorName());
@@ -56,9 +48,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         if (posts.get(i).getFeaturedImageLink() != null && posts.get(i).getFeaturedImageLink().length() > 0) {
             viewHolder.featuredImage.setVisibility(View.VISIBLE);
             Picasso.with(context).load(posts.get(i).getFeaturedImageLink())
-                    .placeholder(R.drawable.bhu)
+                    .centerInside().fit()
                     .into(viewHolder.featuredImage);
         }
+        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, StoryActivity.class);
+                intent.putExtra("article_id", viewHolder.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -71,6 +72,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         TextView postExcerpt, postTitle, postAuthor, postTime;
         ImageView featuredImage;
         View mView;
+        private long viewId;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +83,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             featuredImage = (ImageView) itemView.findViewById(R.id.featured_image);
             postAuthor = (TextView) itemView.findViewById(R.id.post_author);
             postTime = (TextView) itemView.findViewById(R.id.post_time);
+        }
+
+        public long getId() {
+            return this.viewId;
+        }
+
+        public void setId(long id) {
+            this.viewId = id;
         }
     }
 }

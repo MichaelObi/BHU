@@ -3,6 +3,7 @@ package net.devdome.bhu.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Browser;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +11,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import net.devdome.bhu.Config;
 import net.devdome.bhu.R;
@@ -24,6 +29,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     Toolbar toolbar;
     ActionBarDrawerToggle drawerToggle;
     NavigationView navigationView;
+    ImageView profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +76,14 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     @Override
     public void onDrawerOpened(View drawerView) {
-
+        // Load profile image
+        profileImage = (ImageView) drawerView.findViewById(R.id.nav_drawer_profile_img);
+        String imgUrl = Config.BASE_URL + "/users/" + mPreferences.getInt(Config.KEY_USER_ID, -1) + "/avatar";
+        Log.i(Config.TAG, "Profile Image URL: " + imgUrl);
+        Picasso.with(this)
+                .load(imgUrl + "?X-Authorization=" + mPreferences.getString(Config.KEY_AUTH_TOKEN, ""))
+                .into(profileImage);
+        Browser.sendString(this, imgUrl + "?X-Authorization=" + mPreferences.getString(Config.KEY_AUTH_TOKEN, ""));
     }
 
     @Override
@@ -100,7 +113,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
                 break;
             case R.id.nav_logout:
                 SharedPreferences prefs = this.getSharedPreferences(Config.KEY_USER_PROFILE, MODE_PRIVATE);
-                prefs.edit().clear().commit();
+                prefs.edit().clear().apply();
                 Intent i = new Intent(this, LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

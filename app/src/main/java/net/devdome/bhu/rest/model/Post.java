@@ -9,6 +9,7 @@ public class Post {
     public List<Data> getData() {
         return data;
     }
+
     public class Data {
         public int id;
         public String title;
@@ -19,6 +20,7 @@ public class Post {
         public String author_first_name;
         public String author_last_name;
         public long created_at;
+        public long updated_at;
 
         public long getUpdated_at() {
             return updated_at;
@@ -35,8 +37,6 @@ public class Post {
         public void setCreated_at(long created_at) {
             this.created_at = created_at;
         }
-
-        public long updated_at;
 
         public int getId() {
             return id;

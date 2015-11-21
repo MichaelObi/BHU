@@ -1,19 +1,23 @@
 package net.devdome.bhu.ui.activity;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import net.devdome.bhu.R;
+import net.devdome.bhu.db.NewsDatabase;
+import net.devdome.bhu.model.Post;
 
 public class StoryActivity extends BaseActivity implements View.OnClickListener {
 
@@ -22,16 +26,31 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
     ActionBar actionBar;
     //    CollapsingToolbarLayout collapsingToolbar;
     FloatingActionButton fabComment;
+    Context context;
+    TextView tvTitle, tvBody, tvAuthor, tvDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+        context = getApplicationContext();
+        NewsDatabase db = new NewsDatabase(context);
+        Post post = Post.getPost(db.find((int) getIntent().getLongExtra("article_id", 0)));
         featuredImage = (ImageView) findViewById(R.id.backdrop);
-//        Picasso.with(this).load("http://wallpoper.com/images/00/45/05/47/green-background-2_00450547.jpg")
-//                .centerCrop()
-//                .fit()
-//                .into(featuredImage);
+        tvTitle = (TextView) findViewById(R.id.story_title);
+        tvBody = (TextView) findViewById(R.id.story_body);
+        tvAuthor = (TextView) findViewById(R.id.story_author);
+        tvDate = (TextView) findViewById(R.id.story_date);
+        tvTitle.setText(post.getPostTitle());
+        tvBody.setText(post.getPostContent());
+        tvAuthor.setText(post.getAuthorName());
+        tvDate.setText(DateUtils.getRelativeTimeSpanString(context, post.getUpdatedAt()));
+        if (post.getFeaturedImageLink() != null && post.getFeaturedImageLink().length() > 0) {
+            featuredImage.setVisibility(View.VISIBLE);
+            Picasso.with(this).load(post.getFeaturedImageLink())
+                    .centerInside().fit()
+                    .into(featuredImage);
+        }
 //        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -43,6 +62,7 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         fabComment = (FloatingActionButton) findViewById(R.id.fab_comment);
+
         fabComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,17 +74,17 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) featuredImage.getDrawable();
-            Palette p = Palette.from(bitmapDrawable.getBitmap()).generate();
-            Palette.Swatch swatch = p.getDarkVibrantSwatch();
-            if (swatch != null) {
-                toolbar.setTitleTextColor((swatch.getTitleTextColor()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getWindow().setStatusBarColor(swatch.getRgb());
-                }
-            }
-        }
+//        if (hasFocus) {
+//            BitmapDrawable bitmapDrawable = (BitmapDrawable) featuredImage.getDrawable();
+//            Palette p = Palette.from(bitmapDrawable.getBitmap()).generate();
+//            Palette.Swatch swatch = p.getDarkVibrantSwatch();
+//            if (swatch != null) {
+//                toolbar.setTitleTextColor((swatch.getTitleTextColor()));
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    getWindow().setStatusBarColor(swatch.getRgb());
+//                }
+//            }
+//        }
     }
 
     @Override

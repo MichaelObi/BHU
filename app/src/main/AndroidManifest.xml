@@ -1,84 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.devdome.bhu">
+          package="net.devdome.bhu">
 
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_STATS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
     <permission
-        android:name="net.devdome.bhu.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+            android:name="net.devdome.bhu.permission.C2D_MESSAGE"
+            android:protectionLevel="signature"/>
 
-    <uses-permission android:name="net.devdome.bhu.permission.C2D_MESSAGE" />
+    <uses-permission android:name="net.devdome.bhu.permission.C2D_MESSAGE"/>
 
     <application
-        android:allowBackup="true"
-        android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Material">
+            android:allowBackup="true"
+            android:fullBackupContent="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/Material">
+
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver"
+                  android:permission="com.google.android.c2dm.permission.SEND"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.permission.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="net.devdome.bhu"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".sync.BhuGcmListenerService"
+                 android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
+
         <provider
-            android:name=".provider.NewsProvider"
-            android:authorities="net.devdome.bhu"
-            android:exported="true" />
+                android:name=".provider.NewsProvider"
+                android:authorities="net.devdome.bhu"
+                android:exported="true"/>
 
         <activity
-            android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme.Dark">
+                android:name=".ui.activity.LoginActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/MaterialTheme.Dark">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <service
-            android:name=".authentication.BHUAuthenticateService"
-            android:exported="true">
+                android:name=".authentication.BHUAuthenticateService"
+                android:exported="true">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
+                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
 
             <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
+                    android:name="android.accounts.AccountAuthenticator"
+                    android:resource="@xml/authenticator"/>
         </service>
 
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait" />
+                android:name=".ui.activity.MainActivity"
+                android:label="@string/title_activity_main"
+                android:screenOrientation="portrait"/>
 
         <service
-            android:name=".sync.BHUSyncService"
-            android:exported="true">
+                android:name=".sync.BHUSyncService"
+                android:exported="true">
             <intent-filter>
-                <action android:name="android.content.SyncAdapter" />
+                <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
 
             <meta-data
-                android:name="android.content.SyncAdapter"
-                android:resource="@xml/syncadapter" />
+                    android:name="android.content.SyncAdapter"
+                    android:resource="@xml/syncadapter"/>
         </service>
 
         <activity
-            android:name=".ui.activity.StoryActivity"
-            android:label="@string/title_activity_story"
-            android:screenOrientation="portrait" />
+                android:name=".ui.activity.StoryActivity"
+                android:label="@string/title_activity_story"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme.Dark" />
+                android:name=".ui.activity.RegisterActivity"
+                android:label="@string/title_activity_register"
+                android:screenOrientation="portrait"
+                android:theme="@style/MaterialTheme.Dark"/>
     </application>
 
 </manifest>

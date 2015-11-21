@@ -1,5 +1,7 @@
 package net.devdome.bhu.ui.activity;
 
+import com.google.gson.JsonObject;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,8 +18,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.JsonObject;
 
 import net.devdome.bhu.Config;
 import net.devdome.bhu.R;
@@ -163,7 +163,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (json.has("email")) return json.getAsJsonArray("email").get(0).getAsString();
             if (json.has("password")) return json.getAsJsonArray("password").get(0).getAsString();
             if (json.has("matric_no")) return json.getAsJsonArray("matric_no").get(0).getAsString();
-
             return "A registration error occurred. Please contact support.";
         }
     }

@@ -1,8 +1,5 @@
 package net.devdome.bhu.authentication;
 
-import net.devdome.bhu.authentication.HttpServerAuthenticator;
-import net.devdome.bhu.authentication.ServerAuthenticator;
-
 public class AccountConfig {
 
 
