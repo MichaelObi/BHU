@@ -21,6 +21,15 @@ public class Post {
         public String author_last_name;
         public long created_at;
         public long updated_at;
+        public int deleted;
+
+
+        public boolean isDeleted() {
+            if (deleted > 0) {
+                return true;
+            }
+            return false;
+        }
 
         public long getUpdated_at() {
             return updated_at;

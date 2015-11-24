@@ -37,26 +37,28 @@ public class NewsFragment extends Fragment {
     Context context;
     AccountManager accountManager;
     View view;
+    RecyclerView rvNews;
+
     private BroadcastReceiver syncBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
             Log.e(Config.TAG, "Broadcast: posts updated! ");
             if (intent.getBooleanExtra(Config.EXTRA_POSTS_ADDED, false)) {
-                final Snackbar snackbar = Snackbar.make(view, "New articles have been added", Snackbar.LENGTH_LONG)
-                        .setAction("View", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(context, "Snackbar action clicked", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                snackbar.show();
+//                final Snackbar snackbar = Snackbar.make(view, "New articles have been added", Snackbar.LENGTH_LONG)
+//                        .setAction("View", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Toast.makeText(context, "Snackbar action clicked", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                snackbar.show();
+                rvNews.getAdapter().notifyDataSetChanged();
             }
         }
     };
 
 
-    public NewsFragment() {
-    }
+    public NewsFragment() {}
 
     public static NewsFragment getInstance() {
         return new NewsFragment();
@@ -67,7 +69,7 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         context = getActivity();
         view = inflater.inflate(R.layout.fragment_news, container, false);
-        RecyclerView rvNews = (RecyclerView) view.findViewById(R.id.rv_news);
+        rvNews = (RecyclerView) view.findViewById(R.id.rv_news);
         rvNews.hasFixedSize();
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rvNews.setLayoutManager(layoutManager);

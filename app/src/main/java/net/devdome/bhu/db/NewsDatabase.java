@@ -82,8 +82,9 @@ public class NewsDatabase extends DatabaseHelper {
         };
         Cursor c = db.query(TABLE_NAME, key, null, null, null, null, KEY_UPDATED_AT + " DESC", "1");
         if (c != null) {
-            c.moveToFirst();
-            return c.getLong(c.getColumnIndex(NewsDatabase.KEY_UPDATED_AT));
+            if (c.moveToFirst()) {
+                return c.getLong(c.getColumnIndex(NewsDatabase.KEY_UPDATED_AT));
+            }
         }
         db.close();
         return 0;
@@ -111,5 +112,15 @@ public class NewsDatabase extends DatabaseHelper {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void delete(int id) {
+        try {
+            db = getWritableDatabase();
+            db.delete(TABLE_NAME, KEY_POST_ID + " = " + id, null);
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -54,6 +54,12 @@ public class BHUSyncAdapter extends AbstractThreadedSyncAdapter {
                 NewsDatabase db = new NewsDatabase(context);
                 for (int i = 0; i < data.size(); i++) {
                     post = data.get(i);
+
+                    if (post.isDeleted()) {
+                        db.delete(post.getId());
+                        continue;
+                    }
+
                     values = new ContentValues(data.size());
                     values.put(NewsDatabase.KEY_POST_ID, post.getId());
                     values.put(NewsDatabase.KEY_POST_TITLE, post.getTitle());

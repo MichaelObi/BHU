@@ -3,7 +3,6 @@ package net.devdome.bhu.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Browser;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -76,14 +75,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     @Override
     public void onDrawerOpened(View drawerView) {
-        // Load profile image
         profileImage = (ImageView) drawerView.findViewById(R.id.nav_drawer_profile_img);
-        String imgUrl = Config.BASE_URL + "/users/" + mPreferences.getInt(Config.KEY_USER_ID, -1) + "/avatar";
-        Log.i(Config.TAG, "Profile Image URL: " + imgUrl);
+        String imgUrl = mPreferences.getString(Config.KEY_AVATAR, "http://kudago.com/static/img/default-avatar.png");
         Picasso.with(this)
-                .load(imgUrl + "?X-Authorization=" + mPreferences.getString(Config.KEY_AUTH_TOKEN, ""))
+                .load(imgUrl)
                 .into(profileImage);
-        Browser.sendString(this, imgUrl + "?X-Authorization=" + mPreferences.getString(Config.KEY_AUTH_TOKEN, ""));
     }
 
     @Override
@@ -103,6 +99,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
      * @param itemId id of the {@link MenuItem} clicked
      */
     private void navigate(int itemId) {
+
         String title = "";
         Fragment fragment;
         switch (itemId) {
@@ -132,10 +129,12 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        if (menuItem.isCheckable()) {
-            menuItem.setChecked(true);
+        if (!menuItem.isChecked()) {
+            if (menuItem.isCheckable()) {
+                menuItem.setChecked(true);
+            }
+            navigate(menuItem.getItemId());
         }
-        navigate(menuItem.getItemId());
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

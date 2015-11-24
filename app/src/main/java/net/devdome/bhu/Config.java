@@ -20,6 +20,7 @@ public class Config {
     public static String KEY_LEVEL = "level";
     public static String KEY_DEPARTMENT_NAME = "department_name";
     public static String KEY_DEPARTMENT_CODE = "department_code";
+    public static String KEY_AVATAR = "avatar";
     public static String KEY_DEPARTMENT = "department";
     public static String KEY_CODE = "code";
     public static String KEY_NAME = "name";

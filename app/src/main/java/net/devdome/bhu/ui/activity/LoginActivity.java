@@ -173,6 +173,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
         editPrefs.putString(Config.KEY_LEVEL, data.get(Config.KEY_LEVEL).getAsString());
         editPrefs.putString(Config.KEY_DEPARTMENT_NAME, data.getAsJsonObject(Config.KEY_DEPARTMENT).get(Config.KEY_NAME).getAsString());
         editPrefs.putString(Config.KEY_DEPARTMENT_CODE, data.getAsJsonObject(Config.KEY_DEPARTMENT).get(Config.KEY_CODE).getAsString());
+        editPrefs.putString(Config.KEY_AVATAR, data.get(Config.KEY_AVATAR).getAsString());
         editPrefs.apply();
     }
 }
