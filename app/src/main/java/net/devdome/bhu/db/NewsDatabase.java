@@ -85,8 +85,9 @@ public class NewsDatabase extends DatabaseHelper {
             if (c.moveToFirst()) {
                 return c.getLong(c.getColumnIndex(NewsDatabase.KEY_UPDATED_AT));
             }
+            c.close();
+            db.close();
         }
-        db.close();
         return 0;
     }
 
@@ -94,8 +95,22 @@ public class NewsDatabase extends DatabaseHelper {
     public Cursor find(int id) {
         db = getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + "_id" + " = '" + id + "'", null);
-        c.moveToFirst();
-        return c;
+        if (c.moveToFirst()) {
+            return c;
+        }
+        return null;
+    }
+
+    /**
+     * Find a post using the Application ID. Identifier provided by server
+     */
+    public Cursor findPost(int postId) {
+        db = getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + NewsDatabase.KEY_POST_ID + " = '" + postId + "'", null);
+        if (c.moveToFirst()) {
+            return c;
+        }
+        return null;
     }
 
     /**
@@ -112,6 +127,20 @@ public class NewsDatabase extends DatabaseHelper {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * Update the record with the provided post id
+     * @param values
+     * @return
+     */
+    public boolean update(long postId, ContentValues values) {
+        db = getWritableDatabase();
+        int count = db.update(TABLE_NAME, values, KEY_POST_ID + " = " + postId, null);
+        if (count > 0) {
+            return true;
+        }
+        return false;
     }
 
     public void delete(int id) {

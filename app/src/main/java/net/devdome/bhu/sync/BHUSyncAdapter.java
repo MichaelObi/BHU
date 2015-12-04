@@ -52,6 +52,7 @@ public class BHUSyncAdapter extends AbstractThreadedSyncAdapter {
                 Post.Data post;
                 ContentValues values;
                 NewsDatabase db = new NewsDatabase(context);
+                boolean newPostsAdded = false;
                 for (int i = 0; i < data.size(); i++) {
                     post = data.get(i);
 
@@ -70,10 +71,17 @@ public class BHUSyncAdapter extends AbstractThreadedSyncAdapter {
                     values.put(NewsDatabase.KEY_POST_AUTHOR_NAME, post.getAuthor_first_name() + " " + post.getAuthor_last_name());
                     values.put(NewsDatabase.KEY_CREATED_AT, post.getCreated_at() * 1000);
                     values.put(NewsDatabase.KEY_UPDATED_AT, post.getUpdated_at() * 1000);
-                    db.insert(values);
+                    if (db.findPost(post.getId()) == null) {
+                        long id = db.insert(values);
+                        newPostsAdded = true;
+                    } else {
+                        db.update(post.getId(), values);
+                    }
                 }
 
-                context.sendBroadcast(new Intent(ACTION_FINISHED_SYNC).putExtra(Config.EXTRA_POSTS_ADDED, true));
+                context.sendBroadcast(new Intent(ACTION_FINISHED_SYNC).putExtra(Config.EXTRA_POSTS_ADDED, newPostsAdded));
+                Log.i(Config.TAG, "New posts? " + Boolean.toString(newPostsAdded));
+
             }
 
             @Override

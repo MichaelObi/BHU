@@ -2,9 +2,11 @@ package net.devdome.bhu.ui.fragment;
 
 
 import android.accounts.AccountManager;
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,8 +36,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = getActivity();
-        return inflater.inflate(R.layout.fragment_news, container, false);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

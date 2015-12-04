@@ -9,6 +9,7 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import net.devdome.bhu.Config;
 import net.devdome.bhu.R;
 import net.devdome.bhu.authentication.AccountConfig;
+import net.devdome.bhu.provider.NewsProvider;
 import net.devdome.bhu.utility.NetworkUtilities;
 
 import java.io.IOException;
@@ -148,8 +150,14 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
                     mAccountManager.setAuthToken(account, AccountConfig.TOKEN_TYPE, authCode);
                     setAccountAuthenticatorResult(intent.getExtras());
                     setResult(RESULT_OK, intent);
-                    storeProfile(new JsonParser().parse(intent.getStringExtra("profile")).getAsJsonObject(), intent.getIntExtra(USERID, 0), authCode);
 
+                    Bundle settingsBundle = new Bundle();
+//                    settingsBundle.putBoolean(
+//                            ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                    ContentResolver.setIsSyncable(account, NewsProvider.AUTHORITY, 1);
+//                    ContentResolver.setSyncAutomatically(account, NewsProvider.AUTHORITY, true);
+                    ContentResolver.addPeriodicSync(account, NewsProvider.AUTHORITY, settingsBundle, 3600);
+                    storeProfile(new JsonParser().parse(intent.getStringExtra("profile")).getAsJsonObject(), intent.getIntExtra(USERID, 0), authCode);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                     progressDialog.cancel();

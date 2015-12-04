@@ -1,6 +1,7 @@
 package net.devdome.bhu.ui.activity;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +37,12 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_story);
         context = getApplicationContext();
         NewsDatabase db = new NewsDatabase(context);
-        Post post = Post.getPost(db.find((int) getIntent().getLongExtra("article_id", 0)));
+        Cursor c = db.find((int) getIntent().getLongExtra("article_id", 0));
+        if(c == null) {
+            Toast.makeText(this, "The story does not exist.", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
+        Post post = Post.getPost(c);
         featuredImage = (ImageView) findViewById(R.id.backdrop);
         tvTitle = (TextView) findViewById(R.id.story_title);
         tvBody = (TextView) findViewById(R.id.story_body);
@@ -87,12 +94,6 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
 //        }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_story, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
