@@ -127,6 +127,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
                         }
                         return res;
                     } catch (Exception e) {
+                        e.printStackTrace();
                         Log.e(Config.TAG, e.getMessage());
                         res.putExtra(KEY_ERROR_MESSAGE, "A server error occurred. Try again later.");
                         return res;

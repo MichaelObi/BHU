@@ -31,4 +31,5 @@ public class Config {
 
     // Period in seconds between syncs
     public final static long SYNC_PERIOD = 7200; //2 hours
+    public static long REALM_SCHEMA_VERSION = 1;
 }

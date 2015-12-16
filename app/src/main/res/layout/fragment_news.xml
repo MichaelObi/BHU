@@ -1,7 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center|center_vertical">
+
+    <ProgressBar
+        android:id="@+id/pb_news"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <net.devdome.bhu.ui.components.SwipeRefreshLayout
         android:id="@+id/srl_news"
@@ -11,7 +21,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_news"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/card_news"/>
 
     </net.devdome.bhu.ui.components.SwipeRefreshLayout>
 </LinearLayout>

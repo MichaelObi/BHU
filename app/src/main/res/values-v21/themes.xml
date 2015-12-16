@@ -6,6 +6,7 @@
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
     </style>
 
     <style name="MaterialTheme.Dark" parent="Theme.AppCompat.NoActionBar">
