@@ -12,7 +12,6 @@ import android.content.SyncRequest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import net.devdome.bhu.ui.components.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import net.devdome.bhu.Config;
@@ -28,7 +28,9 @@ import net.devdome.bhu.R;
 import net.devdome.bhu.authentication.AccountConfig;
 import net.devdome.bhu.provider.NewsProvider;
 import net.devdome.bhu.sync.BHUSyncAdapter;
+import net.devdome.bhu.ui.activity.BaseActivity;
 import net.devdome.bhu.ui.adapter.NewsAdapter;
+import net.devdome.bhu.ui.components.SwipeRefreshLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +43,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     View view;
     RecyclerView rvNews;
     SwipeRefreshLayout swipeRefreshLayout;
+    ProgressBar progressBar;
+    NewsAdapter adapter;
 
     private BroadcastReceiver syncBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -48,7 +52,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             Log.e(Config.TAG, "Broadcast: posts updated! ");
             swipeRefreshLayout.setRefreshing(false);
             if (intent.getBooleanExtra(Config.EXTRA_POSTS_ADDED, false)) {
-                rvNews.getAdapter().notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }
     };
@@ -72,10 +76,12 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         rvNews.hasFixedSize();
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rvNews.setLayoutManager(layoutManager);
-        rvNews.setAdapter(new NewsAdapter(context));
+        adapter = new NewsAdapter(context);
+        rvNews.setAdapter(adapter);
         setHasOptionsMenu(true);
         accountManager = AccountManager.get(context);
-
+        progressBar = (ProgressBar) view.findViewById(R.id.pb_news);
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle("News");
         return view;
     }
 
@@ -99,7 +105,11 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onStart();
         int articleCount = rvNews.getAdapter().getItemCount();
         if (articleCount < 1 && !swipeRefreshLayout.isRefreshing()) {
-            onRefresh();
+            progressBar.setVisibility(View.VISIBLE);
+            rvNews.setVisibility(View.GONE);
+            refresh();
+            progressBar.setVisibility(View.GONE);
+            rvNews.setVisibility(View.VISIBLE);
         }
     }
 
@@ -114,8 +124,12 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         if (swipeRefreshLayout.isRefreshing()) {
             return;
         }
-        Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(true);
+        refresh();
+    }
+
+    private void refresh() {
+        Toast.makeText(getActivity(), "Refreshing", Toast.LENGTH_SHORT).show();
         accountManager = AccountManager.get(getActivity());
         Account account = accountManager.getAccountsByType(AccountConfig.ACCOUNT_TYPE)[0];
         if (ContentResolver.isSyncPending(account, NewsProvider.AUTHORITY) ||

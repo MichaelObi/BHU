@@ -40,6 +40,14 @@
     <string name="registration_success">You have been registered successfully. Please login</string>
     <string name="john_doe">By John Doe</string>
     <string name="test_date">November 22</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_courses">My Courses</string>
+    <string name="refresh_courses">Refresh Courses</string>
+    <string name="no_registered_courses">No Registered Courses</string>
+    <string name="add_your_courses">Add Your Courses</string>
+    <string name="add_your_courses_now">Add Your Courses Now</string>
+    <string name="search">Search</string>
+    <string name="submit">Submit</string>
 
 
     <string-array name="departments_array">

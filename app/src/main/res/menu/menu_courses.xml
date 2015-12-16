@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:orderInCategory="1"
+        android:id="@+id/item_courses_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/search"
+        app:showAsAction="always" />
+
+    <item
+        android:orderInCategory="2"
+        android:id="@+id/item_courses_refresh"
+        android:icon="@drawable/ic_refresh_24dp"
+        android:title="@string/refresh_courses"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_courses_submit"
+        android:icon="@drawable/ic_send_24dp"
+        android:orderInCategory="3"
+        android:title="@string/submit"
+        app:showAsAction="ifRoom" />
+</menu>

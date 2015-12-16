@@ -3,6 +3,9 @@ package net.devdome.bhu.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import net.devdome.bhu.Config;
@@ -36,5 +39,19 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
+    }
+
+    public void loadFragment(Fragment fragment, int containerId, Boolean addToBackStack) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction().replace(containerId, fragment);
+        if (addToBackStack) {
+            transaction.addToBackStack(fragment.getTag());
+        }
+        transaction.commit();
+        fragmentManager.executePendingTransactions();
+    }
+
+    public String getAuthToken() {
+        return mPreferences.getString(Config.KEY_AUTH_TOKEN, null);
     }
 }

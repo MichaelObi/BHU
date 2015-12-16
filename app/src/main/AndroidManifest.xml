@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.devdome.bhu">
+<manifest
+    package="net.devdome.bhu"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,6 +22,7 @@
     <uses-permission android:name="net.devdome.bhu.permission.C2D_MESSAGE" />
 
     <application
+        android:name=".BHUApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher_new"
@@ -77,6 +79,10 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MyCoursesActivity"
+            android:label="@string/my_courses"
             android:screenOrientation="portrait" />
 
         <service

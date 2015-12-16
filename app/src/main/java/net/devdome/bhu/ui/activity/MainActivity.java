@@ -2,16 +2,18 @@ package net.devdome.bhu.ui.activity;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,11 +39,18 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     ImageView profileImage;
     TextView tvNameNav, tvEmailNav, tvDeptNav;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Slide exitSlide = new Slide();
+        exitSlide.setSlideEdge(Gravity.END);
+        getWindow().setExitTransition(exitSlide);
+
+        Slide enterSlide = new Slide();
+        enterSlide.setSlideEdge(Gravity.END);
+        getWindow().setReenterTransition(enterSlide);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,12 +62,6 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         drawerToggle.syncState();
         drawerLayout.setDrawerListener(this);
         navigate(R.id.nav_news);
-
-
-
-
-
-
     }
 
     @Override
@@ -122,17 +125,22 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
             case R.id.nav_news:
                 title = getString(R.string.news);
                 fragment = NewsFragment.getInstance();
-                loadFragment(fragment);
+                loadFragment(fragment, R.id.container, false);
                 break;
             case R.id.nav_profile:
                 title = getString(R.string.profile);
                 fragment = ProfileFragment.getInstance();
-                loadFragment(fragment);
+                loadFragment(fragment, R.id.container, false);
+                break;
+            case R.id.nav_my_courses:
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+                Intent intent = new Intent(this, MyCoursesActivity.class);
+                startActivity(intent, options.toBundle());
                 break;
             case R.id.nav_logout:
                 AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
 
-                // loop through all accounts to remove them
+                // loop through get accounts to remove them
                 Account[] accounts = accountManager.getAccounts();
                 for (Account account : accounts) {
                     if (Objects.equals(account.type.intern(), NewsProvider.AUTHORITY))
@@ -165,21 +173,5 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         navigate(menuItem.getItemId());
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void loadFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-        fragmentManager.executePendingTransactions();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 }

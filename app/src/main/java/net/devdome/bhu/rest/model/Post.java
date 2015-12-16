@@ -7,7 +7,7 @@ public class Post {
     private List<Data> data;
 
     public List<Data> getData() {
-        return data;
+        return this.data;
     }
 
     public class Data {
@@ -25,10 +25,7 @@ public class Post {
 
 
         public boolean isDeleted() {
-            if (deleted > 0) {
-                return true;
-            }
-            return false;
+            return deleted > 0;
         }
 
         public long getUpdated_at() {
