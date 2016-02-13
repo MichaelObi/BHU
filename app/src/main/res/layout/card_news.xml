@@ -10,7 +10,7 @@
     android:layout_marginTop="0dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    tools:context="net.devdome.bhu.ui.activity.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"

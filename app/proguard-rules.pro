@@ -15,6 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-dontwarn com.squareup.**
+-dontwarn okio.**
+
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class com.squareup.okhttp.** { *; }
@@ -28,7 +31,7 @@
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;
 }
--keep class net.devdome.bhu.rest.model.** { *; }
+-keep class net.devdome.bhu.app.rest.model.** { *; }
 
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class *
