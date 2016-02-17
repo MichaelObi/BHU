@@ -52,7 +52,6 @@ import static net.devdome.bhu.app.Config.REQUEST_CODE_ASK_PERMISSION;
  */
 public class ProfileActivity extends BaseActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
     TextView tvProfileTitle, tvEmailAddress, tvLevel, tvDepartment, tvMatricNo;
     ImageView imgProfile;
     LinearLayout topCardContent;
@@ -60,7 +59,6 @@ public class ProfileActivity extends BaseActivity {
 
     SharedPreferences prefs;
     ProgressBar progressBar;
-
 
     public static String getMimeTypeOfFile(String pathName) {
         BitmapFactory.Options opt = new BitmapFactory.Options();
