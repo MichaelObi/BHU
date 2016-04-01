@@ -30,6 +30,7 @@ import net.devdome.bhu.app.provider.NewsProvider;
 import net.devdome.bhu.app.sync.BHUSyncAdapter;
 import net.devdome.bhu.app.ui.activity.BaseActivity;
 import net.devdome.bhu.app.ui.adapter.NewsAdapter;
+import net.devdome.bhu.app.ui.components.DividerItemDecoration;
 import net.devdome.bhu.app.ui.components.SwipeRefreshLayout;
 
 /**
@@ -74,6 +75,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_news);
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#0D407F"), Color.BLACK);
         rvNews.hasFixedSize();
+        rvNews.addItemDecoration(new DividerItemDecoration(2));
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rvNews.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(getActivity());

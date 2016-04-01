@@ -158,4 +158,6 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="avatar">Avatar</string>
     <string name="upload_avatar">Change Avatar</string>
+    <string name="navigation">Navigation</string>
+    <string name="services">Services</string>
 </resources>

@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityManagerCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -32,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import net.devdome.bhu.app.Config;
 import net.devdome.bhu.app.R;
 import net.devdome.bhu.app.provider.NewsProvider;
+import net.devdome.bhu.app.ui.fragment.MapsFragment;
 import net.devdome.bhu.app.ui.fragment.NewsFragment;
 
 import io.realm.Realm;
@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         tvEmailNav = (TextView) findViewById(R.id.nav_drawer_email);
         tvDeptNav = (TextView) findViewById(R.id.nav_drawer_department);
 
-        String imgUrl = mPreferences.getString(Config.KEY_AVATAR, Config.DEFAULT_AVATAR_URL);
+        String imgUrl = mPreferences.getString(Config.KEY_AVATAR, Config.DEFAULT_AVATAR_URL) + "?small=1";
         tvNameNav.setText(String.format("%s %s", mPreferences.getString(Config.KEY_FIRST_NAME, ""), mPreferences.getString(Config.KEY_LAST_NAME, "")));
         tvDeptNav.setText(mPreferences.getString(Config.KEY_DEPARTMENT_NAME, ""));
         tvEmailNav.setText(mPreferences.getString(Config.KEY_EMAIL, ""));
@@ -182,6 +182,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
                 } else {
                     startActivity(intent);
                 }
+                break;
+            case R.id.nav_navigation:
+                title = getString(R.string.navigation);
+                fragment = MapsFragment.getInstance();
+                loadFragment(fragment, R.id.container, false);
                 break;
             case R.id.nav_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);

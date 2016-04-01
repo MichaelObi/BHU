@@ -3,6 +3,8 @@
     package="net.devdome.bhu.app"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,7 +17,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
 
     <permission
         android:name="net.devdome.bhu.app.permission.C2D_MESSAGE"
@@ -30,6 +31,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Material">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDBcqdEV5zsQQuqV5MeH4ApVwwhDiKehdc" />
+
         <provider
             android:name=".provider.NewsProvider"
             android:authorities="net.devdome.bhu.app"
@@ -104,23 +109,22 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="${gcmPermissionRequired}">
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.permission.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.registration" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="net.devdome.bhu.app" />
+                <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".BhuGcmListenerService"
-            android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+
         <service
             android:name=".BhuInstanceIDListenerService"
             android:exported="false">

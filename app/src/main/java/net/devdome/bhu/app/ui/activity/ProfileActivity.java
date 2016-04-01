@@ -221,7 +221,7 @@ public class ProfileActivity extends BaseActivity {
                     TypedFile typedImage = new TypedFile("multipart/form-data", new File(path));
 
                     // Requires longer read timeout
-                    ApiService service = new RestClient(60, 30).getApiService();
+                    ApiService service = new RestClient(90, 60).getApiService();
                     service.uploadAvatar(getAuthToken(), typedImage, new retrofit.Callback<Avatar>() {
                         @Override
                         public void success(Avatar avatar, Response response) {

@@ -1,5 +1,7 @@
 package net.devdome.bhu.app;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Config {
 
 
@@ -36,8 +38,14 @@ public class Config {
     public final static long SYNC_PERIOD = 7200; //2 hours
     public static long REALM_SCHEMA_VERSION = 3;
 
-
+    // HTTP Client setup
     public static final int DEFAULT_HTTP_CONNECT_TIMEOUT = 15;
     public static final int DEFAULT_HTTP_READ_TIMEOUT = 30;
     public static final int REQUEST_CODE_ASK_PERMISSION = 101;
+
+
+    //Map data
+    public static final double LATITUDE = 8.957914;
+    public static final double LONGITUDE = 7.699131;
+    public static final LatLng gpsLocation = new LatLng(LATITUDE, LONGITUDE);
 }

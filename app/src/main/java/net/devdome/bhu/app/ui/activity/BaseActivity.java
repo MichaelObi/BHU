@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import net.devdome.bhu.app.Config;
+import net.devdome.bhu.app.R;
 import net.devdome.bhu.app.utility.PlayServicesUtil;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -16,8 +17,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     SharedPreferences mPreferences;
 
     @Override
+    protected void onDestroy() {
+        overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_down);
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.fade_back);
+
         mPreferences = getSharedPreferences(Config.KEY_USER_PROFILE, MODE_PRIVATE);
         if (mPreferences.getInt(Config.KEY_USER_ID, 0) == 0) {
             Intent i = new Intent(this, LoginActivity.class);

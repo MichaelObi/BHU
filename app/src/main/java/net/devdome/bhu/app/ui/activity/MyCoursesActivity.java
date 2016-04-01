@@ -21,16 +21,6 @@ public class MyCoursesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
 
-        if (SDK_INT >= LOLLIPOP) {
-            Slide enterSlide = new Slide();
-            enterSlide.setSlideEdge(Gravity.END);
-            getWindow().setEnterTransition(enterSlide);
-
-            Slide returnSlide = new Slide();
-            returnSlide.setSlideEdge(Gravity.END);
-            getWindow().setReturnTransition(returnSlide);
-        }
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,6 +50,5 @@ public class MyCoursesActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }
