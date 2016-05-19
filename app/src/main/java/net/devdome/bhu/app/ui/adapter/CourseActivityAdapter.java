@@ -2,17 +2,16 @@ package net.devdome.bhu.app.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import net.devdome.bhu.app.Config;
 import net.devdome.bhu.app.R;
 import net.devdome.bhu.app.db.realm.Course;
 import net.devdome.bhu.app.db.realm.CurricEvent;
 import net.devdome.bhu.app.ui.activity.CourseDetailActivity;
+import net.devdome.bhu.app.utility.TimeUtils;
 
 import java.util.List;
 
@@ -44,6 +43,9 @@ public class CourseActivityAdapter extends RecyclerView.Adapter<CourseActivityAd
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.tvTime.setText(curricEvents.get(position).getStarts_at());
         holder.tvVenue.setText(curricEvents.get(position).getVenue());
+        String day = curricEvents.get(position).getDay().toLowerCase();
+        holder.tvDay.setText(String.format("%s%s", day.substring(0, 1).toUpperCase(), day.substring(1)));
+        holder.tvDuration.setText(TimeUtils.minutesToReadableDuration(curricEvents.get(position).getDuration()));
     }
 
     @Override
@@ -52,12 +54,14 @@ public class CourseActivityAdapter extends RecyclerView.Adapter<CourseActivityAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTime, tvVenue;
+        TextView tvTime, tvVenue, tvDay, tvDuration;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvVenue = (TextView) itemView.findViewById(R.id.tv_venue);
+            tvDay = (TextView) itemView.findViewById(R.id.tv_day);
+            tvDuration = (TextView) itemView.findViewById(R.id.tv_duration);
         }
     }
 }

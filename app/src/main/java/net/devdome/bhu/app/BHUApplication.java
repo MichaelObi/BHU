@@ -1,11 +1,14 @@
 package net.devdome.bhu.app;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.tweetui.TweetUi;
 
+import pl.tajchert.nammu.Nammu;
+
+import io.fabric.sdk.android.Fabric;
 import io.realm.DynamicRealm;
 import io.realm.FieldAttribute;
 import io.realm.Realm;
@@ -14,6 +17,11 @@ import io.realm.RealmMigration;
 import io.realm.RealmSchema;
 
 public class BHUApplication extends Application {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "VY9H2WYirUpn7V7wZiev0guRE";
+    private static final String TWITTER_SECRET = "0XIVwbAaRw4atro81dxGEjpAZjGrTpDvpiUhkecdwQKFXH9Hpx";
+
 //    private RefWatcher refWatcher;
 
 //    public static RefWatcher getRefWatcher(Context context) {
@@ -24,12 +32,20 @@ public class BHUApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
 //        refWatcher = LeakCanary.install(this);
         RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext())
                 .schemaVersion(Config.REALM_SCHEMA_VERSION)
                 .migration(new BHUMigration())
                 .build();
         Realm.setDefaultConfiguration(config);
+        Nammu.init(this); // For permissions
+
+
+        Fabric.with(this,
+                new Twitter(new TwitterAuthConfig("b978c98fd61e0821aac538be83bc868b950296e0", "b281dbafe575f9b53b273186ec399bef3f21861e330312aef45468149e77a5dd")),
+                new TweetUi());
     }
 
 
@@ -62,6 +78,20 @@ public class BHUApplication extends Application {
                 schema.get("CurricularEvent")
                         .removeField("starts_at")
                         .addField("starts_at", String.class);
+                oldVersion++;
+            }
+            if (oldVersion == 3) {
+                schema.create("Notification")
+                        .addField("id", long.class, FieldAttribute.PRIMARY_KEY)
+                        .addField("subject", String.class)
+                        .addField("message", String.class)
+                        .addField("created_at", long.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 4) {
+                schema.get("Notification")
+                        .addField("read", Boolean.class);
                 oldVersion++;
             }
         }

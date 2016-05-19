@@ -28,6 +28,8 @@ public class CurricEvent extends RealmObject {
         this.duration = duration;
     }
 
+
+
     public String getDay() {
         return day;
     }

@@ -1,5 +1,7 @@
 package net.devdome.bhu.app.ui.activity;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,12 +17,6 @@ import net.devdome.bhu.app.utility.PlayServicesUtil;
 public abstract class BaseActivity extends AppCompatActivity {
 
     SharedPreferences mPreferences;
-
-    @Override
-    protected void onDestroy() {
-        overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_down);
-        super.onDestroy();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

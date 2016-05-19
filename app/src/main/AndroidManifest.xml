@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="net.devdome.bhu.app"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.devdome.bhu.app" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <permission
         android:name="net.devdome.bhu.app.permission.C2D_MESSAGE"
@@ -30,7 +31,7 @@
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Material">
+        android:theme="@style/Material" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDBcqdEV5zsQQuqV5MeH4ApVwwhDiKehdc" />
@@ -43,7 +44,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme.Dark">
+            android:theme="@style/MaterialTheme.Dark" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +54,7 @@
 
         <service
             android:name=".authentication.BHUAuthenticateService"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -74,7 +75,7 @@
 
         <service
             android:name=".sync.BHUSyncService"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -101,7 +102,7 @@
         <receiver
             android:name=".sync.NewPostsReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="net.devdome.bhu.app.sync.ACTION_FINISHED_SYNC" />
             </intent-filter>
@@ -109,7 +110,7 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
@@ -118,16 +119,15 @@
         </receiver>
 
         <service
-            android:name=".BhuGcmListenerService"
-            android:exported="false">
+            android:name=".gcm.BhuGcmListenerService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
         <service
-            android:name=".BhuInstanceIDListenerService"
-            android:exported="false">
+            android:name=".gcm.BhuInstanceIDListenerService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
@@ -141,8 +141,14 @@
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
-
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
+        <!-- <receiver android:name=".ui.activity.MainActivity$EveningUpdatesReceiver" /> -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b978c98fd61e0821aac538be83bc868b950296e0" />
+
+        <activity android:name=".ui.activity.NotificationActivity" />
     </application>
 
 </manifest>

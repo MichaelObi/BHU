@@ -3,6 +3,7 @@ package net.devdome.bhu.app.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -43,9 +44,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         Course course = realm.where(Course.class).equalTo("code", courseCode).findFirst();
         adapter = CourseActivityAdapter.get(this, course);
         if (adapter.getItemCount() > 0) {
-//            nothing.setVisibility(View.GONE);
-            CustomLinearLayoutManager layoutManager = new CustomLinearLayoutManager(this);
-            layoutManager.setScrollable(true);
+            nothing.setVisibility(View.GONE);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//            layoutManager.setScrollable(true);
             lectures.setLayoutManager(layoutManager);
             lectures.setAdapter(adapter);
             lectures.setVisibility(View.VISIBLE);

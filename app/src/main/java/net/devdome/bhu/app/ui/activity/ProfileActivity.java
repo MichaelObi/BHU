@@ -91,6 +91,7 @@ public class ProfileActivity extends BaseActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.profile));
+        toolbar.setNavigationIcon(R.drawable.ic_close_24dp);
         setSupportActionBar(toolbar);
 
 

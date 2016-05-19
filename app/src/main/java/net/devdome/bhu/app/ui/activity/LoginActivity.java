@@ -6,7 +6,10 @@ import com.google.gson.JsonParser;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +35,8 @@ import net.devdome.bhu.app.authentication.AccountConfig;
 import net.devdome.bhu.app.provider.NewsProvider;
 import net.devdome.bhu.app.utility.NetworkUtilities;
 import net.devdome.bhu.app.utility.PlayServicesUtil;
+
+import java.util.Calendar;
 
 public class LoginActivity extends AccountAuthenticatorActivity implements View.OnClickListener {
     public final static String PARAM_USER_PASS = "USER_PASS";
@@ -128,6 +133,17 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
         editPrefs.apply();
     }
 
+//    private void scheduleJobs() {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.HOUR_OF_DAY, 20);
+//        calendar.set(Calendar.MINUTE, 30);
+//        calendar.set(Calendar.SECOND, 0);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, EveningUpdatesReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//    }
+
     private class LoginTask extends AsyncTask<String, Void, Intent> {
         @Override
         protected void onPreExecute() {
@@ -203,4 +219,6 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
             progressDialog.cancel();
         }
     }
+
+
 }

@@ -4,37 +4,62 @@
     tools:context=".ui.activity.MainActivity">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_desktop_windows_24dp"
+            android:orderInCategory="102"
+            android:title="@string/dashboard"
+            app:showAsAction="never" />
+        <item
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_format_align_left_24dp"
-            android:orderInCategory="100"
+            android:orderInCategory="103"
             android:title="@string/news"
             app:showAsAction="never" />
+      
         <item
             android:id="@+id/nav_navigation"
             android:icon="@drawable/ic_place_24dp"
-            android:orderInCategory="103"
+            android:orderInCategory="130"
             android:title="@string/navigation"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/nav_social"
+            android:icon="@drawable/ic_whatshot_24dp"
+            android:orderInCategory="125"
+            android:title="@string/social"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/nav_polls"
+            android:icon="@drawable/ic_poll_24dp"
+            android:orderInCategory="126"
+            android:title="@string/polls"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/nav_services"
+            android:icon="@drawable/ic_work_24dp"
+            android:orderInCategory="140"
+            android:title="@string/campus_services"
             app:showAsAction="never" />
     </group>
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_perm_identity_24dp"
-            android:orderInCategory="101"
+            android:orderInCategory="110"
             android:title="@string/profile"
             app:showAsAction="never" />
         <item
             android:id="@+id/nav_my_courses"
             android:icon="@drawable/ic_class_24dp"
-            android:orderInCategory="102"
+            android:orderInCategory="120"
             android:title="@string/my_courses"
             app:showAsAction="never" />
 
         <item
-            android:id="@+id/nav_services"
-            android:icon="@drawable/ic_work_24dp"
-            android:orderInCategory="104"
-            android:title="@string/services"
+            android:id="@+id/nav_bhu_pride"
+            android:icon="@drawable/ic_collections_24dp"
+            android:orderInCategory="145"
+            android:title="@string/my_bingham_my_pride"
             app:showAsAction="never" />
         <item
             android:id="@+id/nav_settings"

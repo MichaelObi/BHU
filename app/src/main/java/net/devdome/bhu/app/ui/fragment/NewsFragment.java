@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -75,22 +76,16 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_news);
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#0D407F"), Color.BLACK);
         rvNews.hasFixedSize();
-        rvNews.addItemDecoration(new DividerItemDecoration(2));
+        rvNews.addItemDecoration(new DividerItemDecoration(4));
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rvNews.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(getActivity());
         rvNews.setAdapter(adapter);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         accountManager = AccountManager.get(context);
         progressBar = (ProgressBar) view.findViewById(R.id.pb_news);
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle("News");
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
     }
 
     @Override

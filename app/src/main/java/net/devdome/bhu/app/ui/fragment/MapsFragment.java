@@ -7,9 +7,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,9 +20,14 @@ import android.widget.Toast;
 
 import net.devdome.bhu.app.Config;
 import net.devdome.bhu.app.R;
+import net.devdome.bhu.app.utility.PermissionUtils;
 
-public class MapsFragment extends Fragment {
-    private GoogleMap gMap;
+import pl.tajchert.nammu.Nammu;
+import pl.tajchert.nammu.PermissionCallback;
+
+public class MapsFragment extends Fragment implements OnMapReadyCallback {
+
+    Context context;
 
     public MapsFragment() {
     }
@@ -33,52 +39,61 @@ public class MapsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.maps_fragment, container, false);
+        View v = inflater.inflate(R.layout.maps_fragment, container, false);
+        ((SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
+        context = getActivity();
+        return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setUpMapIfNeeded();
-    }
-
-    private void setUpMapIfNeeded() {
-        try {
-            if (gMap == null)
-                ((SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map)).getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        gMap = googleMap;
-                    }
-                });
-        } catch (NullPointerException e) {
-            Toast.makeText(getActivity(), "Error retrieving map", Toast.LENGTH_LONG).show();
-        }
-
-        if (gMap != null) {
-            setUpMap();
-        }
     }
 
     private void setUpMap() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(getActivity(), "Permissions need to be granted.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        gMap.addMarker(new MarkerOptions().position(Config.gpsLocation).title("Bingham University"));
-        gMap.getUiSettings().setMyLocationButtonEnabled(true);
-        gMap.getUiSettings().setZoomControlsEnabled(true);
 
-        gMap.setMyLocationEnabled(true);
-        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Config.gpsLocation, 13));
     }
 
 
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions().position(Config.gpsLocation).title("Bingham University"));
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Config.gpsLocation, 15));
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+
+        final PermissionCallback callback = new PermissionCallback() {
+            @Override
+            public void permissionGranted() {
+                googleMap.setMyLocationEnabled(true);
+            }
+
+            @Override
+            public void permissionRefused() {
+                Toast.makeText(getActivity(), "We can't find your locaation unless you grant permissions", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        if (Nammu.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION) || Nammu.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            googleMap.setMyLocationEnabled(true);
+        } else if (Nammu.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.LOCATION_HARDWARE)) {
+            PermissionUtils.showRationale(context, "You need to give permission to make calls.", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            Nammu.askForPermission(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,}, callback);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                }
+            });
+
+        } else {
+            Nammu.askForPermission(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,}, callback);
+        }
+    }
 }

@@ -10,10 +10,10 @@
         <!--<item name="android:statusBarColor">@color/primary_dark</item>-->
         <!--<item name="android:textColorPrimary">@color/primary_text_material_light</item>-->
 
-        <item name="android:windowEnterAnimation">@android:transition/slide_top</item>
-        <item name="android:activityOpenEnterAnimation">@android:transition/slide_top</item>
-        <item name="android:activityOpenExitAnimation">@android:transition/slide_top</item>
-        <item name="android:windowExitAnimation">@android:transition/slide_top</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_in_up</item>
     </style>
 
     <style name="MaterialTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -26,5 +26,9 @@
         <item name="colorButtonNormal">@color/primary_dark</item>
         <item name="android:colorButtonNormal">@color/primary_dark</item>
         <item name="android:color">@color/primary_dark</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_in_up</item>
     </style>
 </resources>

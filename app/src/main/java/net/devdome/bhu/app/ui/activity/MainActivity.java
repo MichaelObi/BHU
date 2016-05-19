@@ -4,6 +4,8 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,9 +32,16 @@ import com.squareup.picasso.Picasso;
 
 import net.devdome.bhu.app.Config;
 import net.devdome.bhu.app.R;
+import net.devdome.bhu.app.db.realm.Notification;
 import net.devdome.bhu.app.provider.NewsProvider;
+import net.devdome.bhu.app.ui.fragment.CampusServicesFragment;
+import net.devdome.bhu.app.ui.fragment.HomeFragment;
 import net.devdome.bhu.app.ui.fragment.MapsFragment;
 import net.devdome.bhu.app.ui.fragment.NewsFragment;
+import net.devdome.bhu.app.ui.fragment.SocialsFragment;
+
+import java.util.Calendar;
+import java.util.List;
 
 import io.realm.Realm;
 
@@ -71,6 +80,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         drawerToggle.syncState();
         drawerLayout.setDrawerListener(this);
         navigate(R.id.nav_news);
+        scheduleJobs();
     }
 
     @Override
@@ -84,7 +94,21 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        // Check that unread notifications exist
+        Realm realm = Realm.getDefaultInstance();
+        List<Notification> unreadNotifications = realm.where(Notification.class).equalTo("read", false).findAll();
+        if (unreadNotifications.size() > 0) {
+            MenuItem item = menu.findItem(R.id.action_notifications);
+            item.setIcon(R.drawable.ic_notifications_24dp);
+        }
         return true;
     }
 
@@ -94,6 +118,10 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_notifications) {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,6 +192,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         Fragment fragment;
         Intent intent;
         switch (itemId) {
+            case R.id.nav_dashboard:
+                title = getString(R.string.dashboard);
+                fragment = new HomeFragment();
+                loadFragment(fragment, R.id.container, false);
+                break;
             case R.id.nav_news:
                 title = getString(R.string.news);
                 fragment = NewsFragment.getInstance();
@@ -186,11 +219,21 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
             case R.id.nav_navigation:
                 title = getString(R.string.navigation);
                 fragment = MapsFragment.getInstance();
+                loadFragment(fragment, R.id.container, true);
+                break;
+            case R.id.nav_services:
+                title = getString(R.string.campus_services);
+                fragment = new CampusServicesFragment();
                 loadFragment(fragment, R.id.container, false);
                 break;
             case R.id.nav_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
+                break;
+            case R.id.nav_social:
+                title = getString(R.string.social) + "- #BinghamUni";
+                fragment = new SocialsFragment();
+                loadFragment(fragment, R.id.container, false);
                 break;
             case R.id.nav_logout:
                 AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
@@ -240,5 +283,35 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void scheduleJobs() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 39);
+        calendar.set(Calendar.SECOND, 0);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, EveningUpdatesReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+
+    }
+
+//    public class EveningUpdatesReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Log.e(Config.TAG, "Hello, Broadcast for stuff received.");
+//            Toast.makeText(getApplicationContext(), "Hello, Broadcast for stuff received.", Toast.LENGTH_SHORT).show();
+//            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context
+//                    .NOTIFICATION_SERVICE);
+//            Notification.Builder notificationBuilder = new Notification.Builder(context)
+//                    .setSmallIcon(R.mipmap.ic_launcher)
+//                    .setPriority(Notification.PRIORITY_DEFAULT)
+//                    .setCategory(Notification.CATEGORY_MESSAGE)
+//                    .setContentTitle("Sample Notification")
+//                    .setContentText("This is a normal notification.");
+//            mNotificationManager.notify(2, notificationBuilder.build());
+//        }
+//    }
 
 }

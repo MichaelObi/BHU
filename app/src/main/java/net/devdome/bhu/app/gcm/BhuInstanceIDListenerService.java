@@ -1,8 +1,10 @@
-package net.devdome.bhu.app;
+package net.devdome.bhu.app.gcm;
 
 import com.google.android.gms.iid.InstanceIDListenerService;
 
 import android.content.Intent;
+
+import net.devdome.bhu.app.RegistrationIntentService;
 
 public class BhuInstanceIDListenerService extends InstanceIDListenerService {
     @Override
