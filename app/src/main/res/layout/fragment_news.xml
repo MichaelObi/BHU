@@ -22,7 +22,7 @@
             android:id="@+id/rv_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/cardnews"/>
+            tools:listitem="@layout/card_news"/>
 
     </net.devdome.bhu.app.ui.components.SwipeRefreshLayout>
 </LinearLayout>

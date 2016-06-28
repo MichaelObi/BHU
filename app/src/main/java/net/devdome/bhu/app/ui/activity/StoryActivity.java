@@ -3,6 +3,7 @@ package net.devdome.bhu.app.ui.activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -19,15 +20,17 @@ import com.squareup.picasso.Picasso;
 import net.devdome.bhu.app.R;
 import net.devdome.bhu.app.db.NewsDatabase;
 import net.devdome.bhu.app.model.Post;
+import net.devdome.bhu.app.ui.fragment.StoryCommentFragment;
 
 public class StoryActivity extends BaseActivity implements View.OnClickListener {
 
-    ImageView featuredImage;
-    Toolbar toolbar;
-    ActionBar actionBar;
-    FloatingActionButton fabComment;
-    Context context;
-    TextView tvTitle, tvBody, tvAuthor, tvDate;
+    private ImageView featuredImage;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
+    private FloatingActionButton fabComment;
+    private Context context;
+    private TextView tvTitle, tvBody, tvAuthor, tvDate;
+    private BottomSheetBehavior sheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +44,18 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
             onBackPressed();
         }
         Post post = Post.getPost(c);
+
         featuredImage = (ImageView) findViewById(R.id.backdrop);
         tvTitle = (TextView) findViewById(R.id.story_title);
         WebView webView = (WebView) findViewById(R.id.webview_story);
         tvAuthor = (TextView) findViewById(R.id.story_author);
         tvDate = (TextView) findViewById(R.id.story_date);
+        fabComment = (FloatingActionButton) findViewById(R.id.fab_comment);
         tvTitle.setText(post.getPostTitle());
         webView.loadData(post.getPostContentHtml(), "text/html", "utf-8");
         tvAuthor.setText(post.getAuthorName());
         tvDate.setText(DateUtils.getRelativeTimeSpanString(context, post.getUpdatedAt()));
+
         if (post.getFeaturedImageLink() != null) {
 
             if (!post.getFeaturedImageLink().isEmpty()) {
@@ -68,25 +74,8 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        fabComment.setOnClickListener(this);
     }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus) {
-//            BitmapDrawable bitmapDrawable = (BitmapDrawable) featuredImage.getDrawable();
-//            Palette p = Palette.from(bitmapDrawable.getBitmap()).generate();
-//            Palette.Swatch swatch = p.getDarkVibrantSwatch();
-//            if (swatch != null) {
-//                toolbar.setTitleTextColor((swatch.getTitleTextColor()));
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    getWindow().setStatusBarColor(swatch.getRgb());
-//                }
-//            }
-//        }
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,11 +86,22 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.fab_comment:
+                fabComment.hide();
+                StoryCommentFragment commentFragmentSheet = new StoryCommentFragment();
+                commentFragmentSheet.show(getSupportFragmentManager(), commentFragmentSheet.getTag());
+                commentFragmentSheet.setBottomSheetStateCallback(new StoryCommentFragment.BottomSheetStateCallback() {
+                    @Override
+                    public void onDismiss() {
+                        fabComment.show();
+                    }
+                });
+                break;
+        }
     }
 }

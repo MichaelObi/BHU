@@ -36,7 +36,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(activity).inflate(R.layout.card_news, viewGroup, false);
+        View v = LayoutInflater.from(activity).inflate(R.layout.card_news_mod, viewGroup, false);
         return new NewsViewHolder(v);
     }
 
@@ -49,9 +49,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         viewHolder.postAuthor.setText(posts.get(i).getAuthorName());
         viewHolder.postTime.setText(DateUtils.getRelativeTimeSpanString(activity, posts.get(i).getUpdatedAt()));
         if (posts.get(i).getFeaturedImageLink() != null && posts.get(i).getFeaturedImageLink().length() > 0) {
-            viewHolder.featuredImage.setVisibility(View.VISIBLE);
+            viewHolder.featuredImageContainer.setVisibility(View.VISIBLE);
             Picasso.with(activity).load(posts.get(i).getFeaturedImageLink())
-                    .centerInside().fit()
                     .into(viewHolder.featuredImage);
         }
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +72,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder {
+        View featuredImageContainer;
         CardView cardView;
         TextView postExcerpt, postTitle, postAuthor, postTime;
         ImageView featuredImage;
@@ -86,6 +86,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             postExcerpt = (TextView) itemView.findViewById(R.id.post_excerpt);
             postTitle = (TextView) itemView.findViewById(R.id.post_title);
             featuredImage = (ImageView) itemView.findViewById(R.id.featured_image);
+            featuredImageContainer = itemView.findViewById(R.id.featured_image_container);
             postAuthor = (TextView) itemView.findViewById(R.id.post_author);
             postTime = (TextView) itemView.findViewById(R.id.post_time);
         }

@@ -19,6 +19,7 @@ import net.devdome.bhu.app.R;
 import net.devdome.bhu.app.ui.activity.BaseActivity;
 import net.devdome.bhu.app.ui.activity.MyCoursesActivity;
 import net.devdome.bhu.app.ui.adapter.CoursesAdapter;
+import net.devdome.bhu.app.ui.components.DividerItemDecoration;
 
 import io.realm.RealmChangeListener;
 

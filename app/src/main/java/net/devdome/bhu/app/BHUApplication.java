@@ -2,13 +2,8 @@ package net.devdome.bhu.app;
 
 import android.app.Application;
 
-import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.tweetui.TweetUi;
-
 import pl.tajchert.nammu.Nammu;
 
-import io.fabric.sdk.android.Fabric;
 import io.realm.DynamicRealm;
 import io.realm.FieldAttribute;
 import io.realm.Realm;
@@ -32,8 +27,6 @@ public class BHUApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
 //        refWatcher = LeakCanary.install(this);
         RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext())
                 .schemaVersion(Config.REALM_SCHEMA_VERSION)
@@ -41,11 +34,6 @@ public class BHUApplication extends Application {
                 .build();
         Realm.setDefaultConfiguration(config);
         Nammu.init(this); // For permissions
-
-
-        Fabric.with(this,
-                new Twitter(new TwitterAuthConfig("b978c98fd61e0821aac538be83bc868b950296e0", "b281dbafe575f9b53b273186ec399bef3f21861e330312aef45468149e77a5dd")),
-                new TweetUi());
     }
 
 

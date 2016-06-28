@@ -76,7 +76,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_news);
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#0D407F"), Color.BLACK);
         rvNews.hasFixedSize();
-        rvNews.addItemDecoration(new DividerItemDecoration(4));
+        rvNews.addItemDecoration(new DividerItemDecoration(8));
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rvNews.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(getActivity());

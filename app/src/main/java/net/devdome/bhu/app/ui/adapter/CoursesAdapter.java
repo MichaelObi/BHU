@@ -70,6 +70,12 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseVi
     }
 
     @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mRealm.close();
+    }
+
+    @Override
     public void onBindViewHolder(final CourseViewHolder holder, int position) {
         if (courses.get(position).isRegistered()) {
             if (holder.btnSubscribe != null) {

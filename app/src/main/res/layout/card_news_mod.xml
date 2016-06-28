@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_news"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:layout_marginTop="0dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    tools:context=".ui.activity.MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessLeaf">
+
+        <LinearLayout
+            android:id="@+id/featured_image_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_weight="4">
+
+            <ImageView
+                android:id="@+id/featured_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="false"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/sun" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <net.devdome.bhu.app.ui.widget.BaselineGridTextView
+                android:id="@+id/post_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFeatureSettings="lnum"
+                android:maxLines="2"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/primary_text"
+                tools:text="Android: An Introduction to Material Design" />
+
+            <net.devdome.bhu.app.ui.widget.BaselineGridTextView
+                android:id="@+id/post_excerpt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFeatureSettings="liga"
+                android:lineSpacingMultiplier="1.5"
+                android:maxLines="3"
+                android:paddingBottom="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                tools:text="This activity shows one or more headers of preferences, each of which is associated with a PreferenceFragment to display the preferences of that header." />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    android:id="@+id/post_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFeatureSettings="smcp"
+                    android:gravity="start"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    tools:text="Michael Obi" />
+
+                <TextView
+                    android:id="@+id/post_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFeatureSettings="smcp"
+                    android:gravity="end"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    tools:text="3 hours ago" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

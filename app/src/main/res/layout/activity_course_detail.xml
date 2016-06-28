@@ -21,35 +21,34 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
+            <net.devdome.bhu.app.ui.widget.BaselineGridTextView
                 android:id="@+id/course_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
+                android:fontFeatureSettings="smcp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 tools:text="Software Engineering" />
 
-            <TextView
-                android:id="@+id/course_lecturer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="@string/i_really_don_t_know"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            <!--<TextView-->
+                <!--android:id="@+id/course_lecturer"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:padding="4dp"-->
+                <!--android:text="@string/i_really_don_t_know"-->
+                <!--android:textAppearance="@style/TextAppearance.AppCompat.Small" />-->
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"

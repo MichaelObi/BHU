@@ -34,6 +34,12 @@ public class CourseActivityAdapter extends RecyclerView.Adapter<CourseActivityAd
     }
 
     @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        realm.close();
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.list_item_course_activity, parent, false);
         return new ViewHolder(v);

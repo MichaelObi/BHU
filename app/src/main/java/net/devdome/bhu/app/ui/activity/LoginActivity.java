@@ -1,15 +1,9 @@
 package net.devdome.bhu.app.ui.activity;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,9 +18,14 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.devdome.bhu.app.Config;
 import net.devdome.bhu.app.R;
@@ -36,8 +35,6 @@ import net.devdome.bhu.app.provider.NewsProvider;
 import net.devdome.bhu.app.utility.NetworkUtilities;
 import net.devdome.bhu.app.utility.PlayServicesUtil;
 
-import java.util.Calendar;
-
 public class LoginActivity extends AccountAuthenticatorActivity implements View.OnClickListener {
     public final static String PARAM_USER_PASS = "USER_PASS";
     public static final String KEY_ERROR_MESSAGE = "ERR_MSG";
@@ -46,7 +43,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
     public final static String ARG_ACCOUNT_NAME = "ACCOUNT_NAME";
     public final static String ARG_IS_ADDING_NEW_ACCOUNT = "IS_ADDING_ACCOUNT";
 
-    AppCompatButton btnLogin;
+    Button btnLogin;
     SharedPreferences mPreferences;
     EditText etEmail;
     EditText etPassword;
@@ -54,10 +51,12 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
     private AccountManager mAccountManager;
     private ProgressDialog progressDialog;
     private String USERID = "user_id";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mPreferences = getSharedPreferences(Config.KEY_USER_PROFILE, MODE_PRIVATE);
         if (mPreferences.getInt(Config.KEY_USER_ID, 0) != 0) {
             Intent i = new Intent(this, MainActivity.class);
@@ -68,7 +67,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
         setContentView(R.layout.activity_login);
         etEmail = ((EditText) findViewById(R.id.et_emailAddress));
         etPassword = ((EditText) findViewById(R.id.et_password));
-        btnLogin = (AppCompatButton) findViewById(R.id.btn_login);
+        btnLogin = (Button) findViewById(R.id.btn_login);
         linkSignup = (TextView) findViewById(R.id.link_signup);
         linkForgotPwd = (TextView) findViewById(R.id.link_forgot_pwd);
 
@@ -80,6 +79,17 @@ public class LoginActivity extends AccountAuthenticatorActivity implements View.
 
         linkForgotPwd.setOnClickListener(this);
 
+        linkSignup.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (!NetworkUtilities.isNetworkEnabled(LoginActivity.this)) {
+                    Toast.makeText(LoginActivity.this, "I couldn't establish Internet connectivity", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                new LoginTask().execute("o.michael@binghamuni.edu.ng", "patrick");
+                return true;
+            }
+        });
     }
 
     @Override

@@ -10,7 +10,6 @@ import net.devdome.bhu.app.ui.adapter.NotificationsAdapter;
 
 import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
 import io.realm.Realm;
-import io.realm.RealmBasedRecyclerViewAdapter;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -22,19 +21,21 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
-
-        RealmRecyclerView recyclerView = (RealmRecyclerView) findViewById(R.id.rv_notifications);
-        realm = Realm.getDefaultInstance();
-        notifications = realm.where(Notification.class).findAllSorted("created_at", Sort.DESCENDING);
-        notificationsAdapter = new NotificationsAdapter(this, notifications, true, true);
-        recyclerView.setAdapter(notificationsAdapter);
+        // for now
+        Toast.makeText(NotificationActivity.this, "Feature's in the works. ", Toast.LENGTH_SHORT).show();
+        finish();
+//        setContentView(R.layout.activity_notification);
+//
+//        RealmRecyclerView recyclerView = (RealmRecyclerView) findViewById(R.id.rv_notifications);
+//        realm = Realm.getDefaultInstance();
+//        notifications = realm.where(Notification.class).findAllSorted("created_at", Sort.DESCENDING);
+//        notificationsAdapter = new NotificationsAdapter(this, notifications, true, true);
+//        recyclerView.setAdapter(notificationsAdapter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         realm.close();
-        realm = null;
     }
 }

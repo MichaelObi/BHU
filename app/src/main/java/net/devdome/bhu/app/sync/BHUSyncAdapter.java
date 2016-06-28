@@ -54,6 +54,7 @@ public class BHUSyncAdapter extends AbstractThreadedSyncAdapter {
         syncCurricularActivities();
         RealmQuery<CurricEvent> query = realm.where(CurricEvent.class);
         Log.i(Config.TAG, "No of curric events available " + String.valueOf(query.findAll().size()));
+        realm.close();
     }
 
     private String getAuthToken(Account account) {
@@ -171,4 +172,6 @@ public class BHUSyncAdapter extends AbstractThreadedSyncAdapter {
             }
         });
     }
+
+
 }
