@@ -18,9 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 
-public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseViewHolder> implements RealmChangeListener {
+public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseViewHolder> {
 
     Boolean registered, all, checkable;
     Realm mRealm;
@@ -119,11 +118,6 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseVi
 
     public List<String> getRegisteredCourses() {
         return this.registeredCourses;
-    }
-
-    @Override
-    public void onChange() {
-        notifyDataSetChanged();
     }
 
 

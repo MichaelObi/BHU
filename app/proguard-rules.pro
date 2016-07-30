@@ -32,6 +32,7 @@
     @retrofit.http.* <methods>;
 }
 -keep class net.devdome.bhu.app.rest.model.** { *; }
+-keep class net.devdome.bhu.app.model.** { *; }
 
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class *

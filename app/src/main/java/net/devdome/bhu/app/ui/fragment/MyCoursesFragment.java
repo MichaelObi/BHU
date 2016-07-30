@@ -19,11 +19,10 @@ import net.devdome.bhu.app.R;
 import net.devdome.bhu.app.ui.activity.BaseActivity;
 import net.devdome.bhu.app.ui.activity.MyCoursesActivity;
 import net.devdome.bhu.app.ui.adapter.CoursesAdapter;
-import net.devdome.bhu.app.ui.components.DividerItemDecoration;
 
 import io.realm.RealmChangeListener;
 
-public class MyCoursesFragment extends Fragment implements RealmChangeListener {
+public class MyCoursesFragment extends Fragment implements RealmChangeListener<CoursesAdapter> {
     View view;
     RecyclerView rvCourses;
     CoursesAdapter coursesAdapter;
@@ -86,9 +85,8 @@ public class MyCoursesFragment extends Fragment implements RealmChangeListener {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
-    public void onChange() {
-        coursesAdapter.notifyDataSetChanged();
+    public void onChange(CoursesAdapter cAdapter) {
+        cAdapter.notifyDataSetChanged();
     }
 }

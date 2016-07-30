@@ -31,6 +31,7 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
     private Context context;
     private TextView tvTitle, tvBody, tvAuthor, tvDate;
     private BottomSheetBehavior sheetBehavior;
+    private Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
             Toast.makeText(this, "The story does not exist.", Toast.LENGTH_SHORT).show();
             onBackPressed();
         }
-        Post post = Post.getPost(c);
+        post = Post.getPost(c);
 
         featuredImage = (ImageView) findViewById(R.id.backdrop);
         tvTitle = (TextView) findViewById(R.id.story_title);
@@ -94,6 +95,9 @@ public class StoryActivity extends BaseActivity implements View.OnClickListener 
             case R.id.fab_comment:
                 fabComment.hide();
                 StoryCommentFragment commentFragmentSheet = new StoryCommentFragment();
+                Bundle args = new Bundle();
+                args.putInt(StoryCommentFragment.ARTICLE_ID, post.getPostId());
+                commentFragmentSheet.setArguments(args);
                 commentFragmentSheet.show(getSupportFragmentManager(), commentFragmentSheet.getTag());
                 commentFragmentSheet.setBottomSheetStateCallback(new StoryCommentFragment.BottomSheetStateCallback() {
                     @Override

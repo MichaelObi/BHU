@@ -16,15 +16,9 @@
         android:fitsSystemWindows="true"
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_expand_more_black_24dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Comments" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar">
-
-
-    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -34,9 +28,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_margin="4dp"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -45,7 +40,7 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/messageEditText"
+                android:id="@+id/tv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -60,8 +55,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:enabled="false"
-            android:src="@android:drawable/ic_menu_send" />
+            tools:visibility="visible"
+            android:src="@android:drawable/ic_menu_send"
+            android:visibility="gone" />
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/linearLayout"
+        android:layout_below="@id/toolbar"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/card_comment" />
 </RelativeLayout>

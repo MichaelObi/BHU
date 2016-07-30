@@ -166,4 +166,5 @@
     <string name="polls">Polls</string>
     <string name="home">Home</string>
     <string name="dashboard">Dashboard</string>
+    <string name="profile_photo">Profile Image</string>
 </resources>

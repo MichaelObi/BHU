@@ -2,6 +2,8 @@ package net.devdome.bhu.app;
 
 import android.app.Application;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import pl.tajchert.nammu.Nammu;
 
 import io.realm.DynamicRealm;
@@ -27,6 +29,7 @@ public class BHUApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 //        refWatcher = LeakCanary.install(this);
         RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext())
                 .schemaVersion(Config.REALM_SCHEMA_VERSION)
