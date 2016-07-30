@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="24dp"
+    android:layout_marginBottom="0dp"
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginTop="0dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    tools:context="net.devdome.bhu.ui.activity.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -36,12 +36,12 @@
             android:layout_below="@id/featured_image"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:paddingTop="8dp"
             android:text=""
             android:textColor="@color/primary_text"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:typeface="serif" />
 
         <TextView
@@ -53,8 +53,8 @@
             android:layout_below="@id/post_title"
             android:maxLines="4"
             android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:paddingTop="8dp"
             android:text=""
             android:textSize="14sp"
@@ -66,8 +66,8 @@
             android:layout_below="@id/post_excerpt"
             android:orientation="horizontal"
             android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:paddingTop="0dp">
 
             <TextView
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text=""
+                android:text="dfdfdfdf"
                 android:textSize="14sp"
                 android:typeface="serif" />
 
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text=""
+                android:text="dfdfdf"
                 android:textSize="14sp"
                 android:typeface="serif" />
 

@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="net.devdome.bhu.ui.activity.MyCoursesActivity">
+    tools:context=".ui.activity.MyCoursesActivity">
 
     <LinearLayout
         android:id="@+id/layout_course_list"
@@ -20,6 +19,7 @@
             android:id="@+id/rv_courses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:listitem="@layout/card_course"
             android:layout_gravity="center" />
 
         <ProgressBar

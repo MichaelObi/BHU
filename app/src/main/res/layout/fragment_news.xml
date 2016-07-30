@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <net.devdome.bhu.ui.components.SwipeRefreshLayout
+    <net.devdome.bhu.app.ui.components.SwipeRefreshLayout
         android:id="@+id/srl_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,5 +24,5 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/card_news"/>
 
-    </net.devdome.bhu.ui.components.SwipeRefreshLayout>
+    </net.devdome.bhu.app.ui.components.SwipeRefreshLayout>
 </LinearLayout>

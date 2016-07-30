@@ -1,67 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/nav_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimaryDark"
-                android:orientation="vertical"
-                android:paddingTop="24dp"
-                android:paddingBottom="24dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                android:weightSum="1">
+<RelativeLayout
+    android:id="@+id/nav_header"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimaryDark"
+    android:orientation="vertical"
+    android:paddingBottom="24dp"
+    android:paddingTop="24dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:weightSum="1">
 
     <ImageView
-            android:id="@+id/nav_drawer_profile_img"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/ic_person_24dp"/>
+        android:id="@+id/nav_drawer_profile_img"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_person_24dp" />
 
     <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/nav_drawer_profile_img"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/nav_drawer_profile_img"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nav_drawer_email"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/nav_drawer_profile_img"
-            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            tools:text="johndoe@example.com" />
+
+        <TextView
+            android:id="@+id/nav_drawer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/nav_drawer_profile_img"
-            android:orientation="vertical">
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="John Doe" />
 
         <TextView
-                android:id="@+id/nav_drawer_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:text="johndoe@example.com"
-                android:textColor="#ffffff"
-                android:textSize="12sp"
-                android:textStyle="normal"/>
-
-        <TextView
-                android:id="@+id/nav_drawer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="John Doe"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-        <TextView
-                android:id="@+id/nav_drawer_department"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Computer Science Department"
-                android:textColor="#ffffff"
-                android:textSize="12sp"
-                android:textStyle="normal"/>
+            android:id="@+id/nav_drawer_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            tools:text="Computer Science Department" />
     </LinearLayout>
 </RelativeLayout>

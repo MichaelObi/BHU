@@ -10,4 +10,8 @@
     <color name="divider">#B6B6B6</color>
     <color name="window_background">#DDD</color>
     <color name="iron">#CCCCCC</color>
+    <color name="primary_text_default_material_light">#deffffff</color>
+    <color name="primary_text_material_light">#ffffff</color>
+    <color name="foreground_material_light">#f8e8e8</color>
+    <color name="primary_text_material">#ffffff</color>
 </resources>

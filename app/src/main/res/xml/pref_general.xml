@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="profile_color_from_pic"
+        android:title="Profile theme from display picture"
+        android:summary="Extract colors from your profile image. (Experimental)"
+        android:defaultValue="true" />
+
+</PreferenceScreen>
