@@ -40,3 +40,5 @@
 -keep @io.realm.internal.Keep class *
 -dontwarn javax.**
 -dontwarn io.realm.**
+
+-keep class org.ocpsoft.prettytime.i18n.**

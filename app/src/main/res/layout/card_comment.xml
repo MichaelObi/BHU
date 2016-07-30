@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin_tiny"
-    tools:showIn="@layout/fragment_story_comments">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_margin_small"
+                tools:showIn="@layout/fragment_story_comments">
 
     <ImageView
         android:id="@+id/profile_photo"
@@ -14,28 +14,43 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/profile_photo"
-        tools:src="@drawable/myk" />
+        tools:src="@drawable/myk"/>
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/profile_photo"
         android:layout_toRightOf="@id/profile_photo"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="Michael Obi" />
+        tools:text="Michael Obi"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/profile_photo"
+        android:layout_toRightOf="@id/profile_photo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        tools:text="@string/longer_test_ipsum"/>
 
     <TextView
         android:id="@+id/tv_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_margin="4dp"
+        android:layout_below="@id/tv_time"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/profile_photo"
         android:layout_toRightOf="@id/profile_photo"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        tools:text="@string/longer_test_ipsum" />
+        tools:text="@string/longer_test_ipsum"/>
 </RelativeLayout>
